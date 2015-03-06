@@ -126,8 +126,10 @@ class Lexer(object):
 
             if char != '/' or (char == '/' and next_char in ('/', '*')):
                 tok = self._get_update_token()
-                if tok.type in ('LINE_TERMINATOR',
-                                'LINE_COMMENT', 'BLOCK_COMMENT'):
+                if tok.type == 'LINE_TERMINATOR':
+                    lexer.lineno += 1
+                    continue
+                elif tok.type in ('LINE_COMMENT', 'BLOCK_COMMENT'):
                     continue
                 else:
                     return tok
@@ -339,7 +341,7 @@ class Lexer(object):
     t_LINE_COMMENT  = r'//[^\r\n]*'
     t_BLOCK_COMMENT = r'/\*[^*]*\*+([^/*][^*]*\*+)*/'
 
-    t_LINE_TERMINATOR = r'[\n\r]+'
+    t_LINE_TERMINATOR = r'[\n\r]'
 
     t_ignore = ' \t'
 

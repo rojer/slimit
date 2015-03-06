@@ -69,6 +69,7 @@ class Parser(object):
         # a SyntaxError exception to avoid looping over and
         # over again.
         self._error_tokens = {}
+        self._line_start = (None, None)
 
     def _has_been_seen_before(self, token):
         if token is None:
@@ -211,7 +212,12 @@ class Parser(object):
 
     def p_identifier(self, p):
         """identifier : ID"""
-        p[0] = ast.Identifier(p[1])
+        line = p.lineno(1)
+        if self._line_start[0] != line:
+            lbegin = p.lexer.lexer.lexdata.rfind('\n', 0, p.lexpos(1))
+            self._line_start = (line, lbegin)
+        col = p.lexpos(1) - self._line_start[1]
+        p[0] = ast.Identifier(p[1], (line, col))
 
     ###########################################
     # Expressions

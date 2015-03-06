@@ -72,11 +72,15 @@ class Number(Node):
         return []
 
 class Identifier(Node):
-    def __init__(self, value):
+    def __init__(self, value, pos):
         self.value = value
+        self.pos = pos
 
     def children(self):
         return []
+
+    def __repr__(self):
+      return '[%s @ %s]' % (self.value, self.pos)
 
 class String(Node):
     def __init__(self, value):
