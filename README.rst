@@ -7,6 +7,7 @@
      ____) | |____ _| |_| |  | |_| |_   | |
     |_____/|______|_____|_|  |_|_____|  |_|
 
+NOTE: Modified for VimJS -- https://github.com/rojer/slimit
 
 Welcome to SlimIt
 ==================================
